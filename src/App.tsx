@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import { Routes, Route, Outlet, Link } from "react-router-dom";
+import ArchivePage from "./pages/archive/ArchivePage";
+import Navbar from "./components/Navbar";
+import EditorPage from "./pages/editor/EditorPage";
+import Homepage from "./pages/home/Homepage";
+import "./App.css";
+import Sidebar from "./components/Sidebar";
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="bg-red-400 flex w-full min-h-screen">
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          <Route index element={<Homepage />} />
+          <Route path="archive" element={<ArchivePage />} />
+          <Route path="editor" element={<EditorPage />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+      <Sidebar />
+    </div>
+  );
 }
 
-export default App
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}
